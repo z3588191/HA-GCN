@@ -40,7 +40,7 @@ if __name__ == "__main__":
                 data = np.load('../data/{}/{}_data_joint.npy'.format(benchmark, part), mmap_mode='r')
                 N, C, T, V, M = data.shape
                 fp_sp = open_memmap(
-                    '../data/{}/{}_data_bone.npy'.format(benchmark, part),
+                    '../data/{}/{}_data_bone_outward.npy'.format(benchmark, part),
                     dtype='float32',
                     mode='w+',
                     shape=(N, 3, T, V, M))
@@ -49,7 +49,7 @@ if __name__ == "__main__":
                 for v1, v2 in tqdm(bone_pairs[benchmark]):
                     v1 -= 1
                     v2 -= 1
-                    fp_sp[:, :, :, v1, :] = data[:, :, :, v1, :] - data[:, :, :, v2, :]
+                    fp_sp[:, :, :, v1, :] = data[:, :, :, v2, :] - data[:, :, :, v1, :]
             except Exception as e:
                 print(f'Run into error: {e}')
                 print(f'Skipping ({benchmark} {part})')

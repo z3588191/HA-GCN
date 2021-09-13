@@ -1,9 +1,8 @@
-work_dir: ./work_dir/ntu/xsub/aagcn_joint
-model_saved_name: ./runs/ntu_cs_aagcn_joint
+model_saved_name: ./runs/ntu_cs_bone_outward
 # feeder
 feeder: feeders.feeder.Feeder
 train_feeder_args:
-  data_path: ./data/ntu/xsub/train_data_joint.npy
+  data_path: ./data/ntu/xsub/train_data_bone_outward.npy
   label_path: ./data/ntu/xsub/train_label.pkl
   debug: False
   random_choose: False
@@ -13,30 +12,32 @@ train_feeder_args:
   normalization: False
 
 test_feeder_args:
-  data_path: ./data/ntu/xsub/val_data_joint.npy
+  data_path: ./data/ntu/xsub/val_data_bone_outward.npy
   label_path: ./data/ntu/xsub/val_label.pkl
 
 # model
-model: model.aagcn.Model
+model: model.model.Model
 model_args:
   num_class: 60
   num_point: 25
   num_person: 2
   graph: graph.ntu_rgb_d.Graph
   graph_args:
-    labeling_mode: 'spatial'
+    labeling_mode: 'disentangle'
+    num_scales: 3
 
 #optim
-weight_decay: 0.0001
-base_lr: 0.1
+weight_decay: 0.0005
+base_lr: 0.05
 step: [30, 40]
 warm_up_epoch: 5
 
 # training
-device: [0, 1, 2, 3]
-batch_size: 64
-test_batch_size: 64
-num_epoch: 50
+device: 0
+batch_size: 32
+subdivision: 2
+test_batch_size: 16
+num_epoch: 60
 nesterov: True
 
 only_train_part: True

@@ -1,0 +1,37 @@
+# feeder
+feeder: feeders.feeder.Feeder
+test_feeder_args1:
+  data_path: ./data/ntu/xsub/val_data_joint.npy
+  label_path: ./data/ntu/xsub/val_label.pkl
+  debug: False
+test_feeder_args2:
+  data_path: ./data/ntu/xsub/val_data_bone.npy
+  label_path: ./data/ntu/xsub/val_label.pkl
+  debug: False
+test_feeder_args3:
+  data_path: ./data/ntu/xsub/val_data_bone_outward.npy
+  label_path: ./data/ntu/xsub/val_label.pkl
+  debug: False
+test_feeder_args4:
+  data_path: ./data/ntu/xsub/val_data_bone_motion.npy
+  label_path: ./data/ntu/xsub/val_label.pkl
+  debug: False
+
+# model
+model: model.model.Model
+model_args:
+  num_class: 60
+  num_point: 25
+  num_person: 2
+  graph: graph.ntu_rgb_d.Graph
+  graph_args:
+    labeling_mode: 'disentangle'
+    num_scales: 3
+
+# test
+device: 0
+test_batch_size: 256
+weights1: ./runs/ntu_cs_joint.pt
+weights2: ./runs/ntu_cs_bone.pt
+weights3: ./runs/ntu_cs_bone_outward.pt
+weights4: ./runs/ntu_cs_bone_motion.pt

@@ -1,4 +1,5 @@
 import sys
+import numpy as np
 
 sys.path.extend(['../'])
 from graph import tools
@@ -15,19 +16,23 @@ neighbor = inward + outward
 
 
 class Graph:
-    def __init__(self, labeling_mode='spatial'):
-        self.A = self.get_adjacency_matrix(labeling_mode)
+    def __init__(self, labeling_mode='spatial', num_scales=6):
         self.num_node = num_node
         self.self_link = self_link
         self.inward = inward
         self.outward = outward
         self.neighbor = neighbor
+        self.A = self.get_adjacency_matrix(labeling_mode, num_scales)
 
-    def get_adjacency_matrix(self, labeling_mode=None):
+    def get_adjacency_matrix(self, labeling_mode=None, num_scales=6):
         if labeling_mode is None:
             return self.A
         if labeling_mode == 'spatial':
             A = tools.get_spatial_graph(num_node, self_link, inward, outward)
+        elif labeling_mode == 'disentangle':
+            A_binary = tools.get_adjacency_matrix(self.neighbor, self.num_node)
+            A_powers = [tools.k_adjacency(A_binary, k, with_self=True) for k in range(num_scales)]
+            A = np.stack(A_powers, axis=0)
         else:
             raise ValueError()
         return A
