@@ -40,5 +40,7 @@ $ python3 ensemble.py --config "config file"
 
 # Acknowledgements
 [ST-GCN](https://github.com/yysijie/st-gcn)
-[22-AGCN](https://github.com/lshiwjx/2s-AGCN)
+
+[2-AGCN](https://github.com/lshiwjx/2s-AGCN)
+
 [MS-G3D](https://github.com/kenziyuliu/MS-G3D)
